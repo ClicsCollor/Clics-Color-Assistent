@@ -12,7 +12,8 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  background: var(--bg);
+  /*background: var(--bg);*/
+  background: white
   color: var(--fg);
   display: flex;
   flex-direction: column;
