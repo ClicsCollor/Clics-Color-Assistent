@@ -1,9 +1,9 @@
-# [Project Title]
+# [Clics Color Assistent]
 
 > Fundamentals Pipeline assignment — Technology-Driven Design, University of Antwerp
 
 ## 1. Component / Challenge Chosen
-<!-- Describe the fundamentals challenge or component this pipeline addresses. What problem does it solve, and why did you pick it? -->
+<!-- Describe the fundamentals challenge or component this pipeline addresses. What problem does it solve, and why did you pick it? --> Children with colour blindness may struggle to distinguish coloured construction pieces when building with Clics Toys. This can make following colour-based instructions more difficult.
 
 ## 2. Model Type: Teachable Machine or Roboflow
 <!-- Delete the option you did not use. -->
