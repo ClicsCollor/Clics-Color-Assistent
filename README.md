@@ -9,7 +9,6 @@
 <!-- Delete the option you did not use. -->
 
 - [ ] Teachable Machine
-- [ ] Roboflow
 
 ## 3. Model Files / API Details
 <!--
