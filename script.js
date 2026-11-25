@@ -76,8 +76,16 @@ startBtn.addEventListener("click", () => {
 */
 
 
+// ======================================
 // CLICS COLOR ASSISTANT
 // Continuous scanning + manual confirmation
+// Camera start/stop with the same button
+// ======================================
+
+
+// ======================================
+// HTML ELEMENTS
+// ======================================
 
 const startBtn = document.getElementById("start-btn");
 const identifyBtn = document.getElementById("identify-btn");
@@ -86,15 +94,18 @@ const labelContainer = document.getElementById("label-container");
 const webcam = document.getElementById("webcam");
 const scanStatus = document.getElementById("scan-status");
 
+
 // ======================================
 // TEACHABLE MACHINE MODEL
 // ======================================
 
 const MODEL_URL = "./model/";
 
-let model;
+let model = null;
 let isRunning = false;
+let isLoading = false;
 let latestPrediction = null;
+let animationFrameId = null;
 
 
 // ======================================
@@ -102,6 +113,7 @@ let latestPrediction = null;
 // ======================================
 
 const colorInfo = {
+
   blue: {
     name: "BLUE",
     symbol: "◆",
@@ -129,11 +141,33 @@ const colorInfo = {
     message: "You found a red block!",
     cssClass: "result-red"
   }
+
 };
 
 
 // ======================================
-// IDENTIFY THE MOST LIKELY COLOR
+// UPDATE CAMERA BUTTON
+// ======================================
+
+function updateCameraButton(active) {
+
+  if (active) {
+
+    startBtn.innerHTML =
+      '<span class="button-icon">■</span> Stop camera';
+
+  } else {
+
+    startBtn.innerHTML =
+      '<span class="button-icon">▶</span> Start camera';
+
+  }
+
+}
+
+
+// ======================================
+// GET THE MOST LIKELY COLOR
 // ======================================
 
 function getBestPrediction(predictions) {
@@ -209,54 +243,141 @@ function displayPrediction(prediction) {
 
 async function initTeachableMachine() {
 
-  if (isRunning) return;
+  if (isRunning || isLoading) return;
+
+  isLoading = true;
 
   startBtn.disabled = true;
+  identifyBtn.disabled = true;
+
   startBtn.textContent = "Loading camera...";
+
+  scanStatus.textContent =
+    "Loading the camera and color assistant...";
 
   try {
 
-    const modelURL = MODEL_URL + "model.json";
-    const metadataURL = MODEL_URL + "metadata.json";
+    // Load the AI model only once
+    if (!model) {
 
-    // Load the AI model
-    model = await tmImage.load(modelURL, metadataURL);
+      const modelURL = MODEL_URL + "model.json";
+      const metadataURL = MODEL_URL + "metadata.json";
 
-    // Activate camera
+      model = await tmImage.load(modelURL, metadataURL);
+
+    }
+
+    // Ask permission to use the camera
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true
     });
 
+    // Connect the camera to the video element
     webcam.srcObject = stream;
 
     await webcam.play();
 
+    // Activate camera
     isRunning = true;
+    latestPrediction = null;
 
-    startBtn.textContent = "Camera active";
+    // Update buttons
+    updateCameraButton(true);
 
+    startBtn.disabled = false;
     identifyBtn.disabled = false;
 
+    // Update status
     scanStatus.textContent =
       "Camera is ready! Place one block on the scanner.";
 
+    // Reset result area
     labelContainer.innerHTML =
       '<p class="result-placeholder">Your color result will appear here when you identify your block.</p>';
 
     // Start continuous scanning
-    window.requestAnimationFrame(loop);
+    animationFrameId = requestAnimationFrame(loop);
 
   } catch (error) {
 
     console.error("Scanner error:", error);
 
+    // Stop any camera stream that may have started
+    if (webcam.srcObject) {
+
+      webcam.srcObject.getTracks().forEach(track => track.stop());
+
+      webcam.srcObject = null;
+
+    }
+
+    isRunning = false;
+    latestPrediction = null;
+
+    updateCameraButton(false);
+
+    identifyBtn.disabled = true;
+
     scanStatus.textContent =
       "Could not start the camera. Please check your camera permissions and model.";
 
+  } finally {
+
+    isLoading = false;
     startBtn.disabled = false;
-    startBtn.textContent = "Try again";
 
   }
+
+}
+
+
+// ======================================
+// STOP CAMERA
+// ======================================
+
+function stopCamera() {
+
+  // Stop the scanning process
+  isRunning = false;
+
+  latestPrediction = null;
+
+  // Cancel the next animation frame
+  if (animationFrameId !== null) {
+
+    cancelAnimationFrame(animationFrameId);
+
+    animationFrameId = null;
+
+  }
+
+  // Stop the actual camera stream
+  if (webcam.srcObject) {
+
+    webcam.srcObject.getTracks().forEach(track => {
+      track.stop();
+    });
+
+    webcam.srcObject = null;
+
+  }
+
+  // Stop the video element
+  webcam.pause();
+
+  // Reset buttons
+  updateCameraButton(false);
+
+  startBtn.disabled = false;
+  identifyBtn.disabled = true;
+
+  // Update status
+  scanStatus.textContent =
+    "Camera stopped. Press Start camera to begin again.";
+
+  // Clear the previous result
+  labelContainer.innerHTML =
+    '<p class="result-placeholder">Your color is waiting to be discovered!</p>';
 
 }
 
@@ -274,7 +395,10 @@ async function loop() {
     // Analyse the current camera image
     const predictions = await model.predict(webcam);
 
-    // Keep the most recent prediction
+    // Check whether the camera was stopped during prediction
+    if (!isRunning) return;
+
+    // Save the most recent prediction
     latestPrediction = getBestPrediction(predictions);
 
     // Update the scanning status
@@ -285,12 +409,8 @@ async function loop() {
 
     console.error("Scanning error:", error);
 
-    isRunning = false;
-    latestPrediction = null;
-
-    identifyBtn.disabled = true;
-    startBtn.disabled = false;
-    startBtn.textContent = "Try again";
+    // Stop the camera if scanning fails
+    stopCamera();
 
     scanStatus.textContent =
       "Scanning stopped. Please try again.";
@@ -301,14 +421,16 @@ async function loop() {
 
   // Continue scanning while the camera is active
   if (isRunning) {
-    window.requestAnimationFrame(loop);
+
+    animationFrameId = requestAnimationFrame(loop);
+
   }
 
 }
 
 
 // ======================================
-// CONFIRM THE COLOR
+// IDENTIFY THE BLOCK
 // ======================================
 
 identifyBtn.addEventListener("click", () => {
@@ -325,12 +447,25 @@ identifyBtn.addEventListener("click", () => {
 
 
 // ======================================
-// START BUTTON
+// CAMERA BUTTON
+// Start and stop with the same button
 // ======================================
 
 startBtn.addEventListener("click", () => {
 
-  initTeachableMachine();
+  if (isLoading) return;
+
+  if (isRunning) {
+
+    // Camera is active: stop it
+    stopCamera();
+
+  } else {
+
+    // Camera is inactive: start it
+    initTeachableMachine();
+
+  }
 
 });
 

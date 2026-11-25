@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,10 @@
   <!-- Google Font: Fredoka -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap"
+    rel="stylesheet"
+  />
 
   <!-- CSS stylesheet -->
   <link rel="stylesheet" href="style.css" />
@@ -67,7 +69,6 @@
 
 
       <!-- Camera preview -->
-      <!-- Keep these IDs connected to script.js -->
       <section id="input-section" aria-label="Camera preview">
 
         <video id="webcam" autoplay playsinline></video>
@@ -87,26 +88,26 @@
       </p>
 
 
-      <!-- START BUTTON -->
-      
-<div class="scanner-controls">
+      <!-- CAMERA TOGGLE AND IDENTIFY BUTTON -->
+      <div class="scanner-controls">
 
-  <button id="start-btn" type="button">
-    <span class="button-icon">▶</span>
-    Start camera
-  </button>
+        <button id="start-btn" type="button">
+          <span class="button-icon">▶</span>
+          Start camera
+        </button>
 
-  <button id="identify-btn" type="button" disabled>
-    <span class="button-icon">✓</span>
-    Identify my block
-  </button>
+        <button id="identify-btn" type="button" disabled>
+          <span class="button-icon">✓</span>
+          Identify my block
+        </button>
 
-</div>
+      </div>
 
-<p id="scan-status" class="scan-status" aria-live="polite">
-  Start the camera to begin scanning.
-</p>
 
+      <!-- CAMERA STATUS -->
+      <p id="scan-status" class="scan-status" aria-live="polite">
+        Press Start camera to begin scanning.
+      </p>
 
 
       <!-- PREDICTION / RESULT SECTION -->
@@ -140,71 +141,90 @@
 
 
     <!-- COLOR GUIDE -->
-<section class="color-guide" aria-labelledby="color-guide-title">
+    <section class="color-guide" aria-labelledby="color-guide-title">
 
-  <div class="color-guide-heading">
-    <div>
-      <p class="eyebrow">MIX, MATCH & CREATE</p>
-      <h2 id="color-guide-title">Meet your Clics colors</h2>
-    </div>
+      <div class="color-guide-heading">
 
-    <p class="color-guide-note">
-      Every color has its own shape and name.
-    </p>
-  </div>
+        <div>
+          <p class="eyebrow">MIX, MATCH & CREATE</p>
+          <h2 id="color-guide-title">Meet your Clics colors</h2>
+        </div>
 
-  <div class="color-grid">
+        <p class="color-guide-note">
+          Every color has its own shape and name.
+        </p>
 
-    <!-- BLUE -->
-    <article class="color-card blue-card">
-      <div class="block-image">
-        <img src="index%20style%20images/blue.png"
-             alt="Blue Clics building block" />
       </div>
-      <div class="color-label">
-        <span class="shape-marker">◆</span>
-        <span class="color-name">BLUE</span>
-      </div>
-    </article>
 
-    <!-- GREEN -->
-    <article class="color-card green-card">
-      <div class="block-image">
-        <img src="index%20style%20images/green.png"
-             alt="Green Clics building block" />
-      </div>
-      <div class="color-label">
-        <span class="shape-marker">●</span>
-        <span class="color-name">GREEN</span>
-      </div>
-    </article>
 
-    <!-- YELLOW -->
-    <article class="color-card yellow-card">
-      <div class="block-image">
-        <img src="index%20style%20images/yellow.png"
-             alt="Yellow Clics building block" />
-      </div>
-      <div class="color-label">
-        <span class="shape-marker">▲</span>
-        <span class="color-name">YELLOW</span>
-      </div>
-    </article>
+      <div class="color-grid">
 
-    <!-- RED -->
-    <article class="color-card red-card">
-      <div class="block-image">
-        <img src="index%20style%20images/red.png"
-             alt="Red Clics building block" />
-      </div>
-      <div class="color-label">
-        <span class="shape-marker">■</span>
-        <span class="color-name">RED</span>
-      </div>
-    </article>
+        <!-- BLUE -->
+        <article class="color-card blue-card">
+          <div class="block-image">
+            <img
+              src="index%20style%20images/blue.png"
+              alt="Blue Clics building block"
+            />
+          </div>
 
-  </div>
-</section>
+          <div class="color-label">
+            <span class="shape-marker">◆</span>
+            <span class="color-name">BLUE</span>
+          </div>
+        </article>
+
+
+        <!-- GREEN -->
+        <article class="color-card green-card">
+          <div class="block-image">
+            <img
+              src="index%20style%20images/green.png"
+              alt="Green Clics building block"
+            />
+          </div>
+
+          <div class="color-label">
+            <span class="shape-marker">●</span>
+            <span class="color-name">GREEN</span>
+          </div>
+        </article>
+
+
+        <!-- YELLOW -->
+        <article class="color-card yellow-card">
+          <div class="block-image">
+            <img
+              src="index%20style%20images/yellow.png"
+              alt="Yellow Clics building block"
+            />
+          </div>
+
+          <div class="color-label">
+            <span class="shape-marker">▲</span>
+            <span class="color-name">YELLOW</span>
+          </div>
+        </article>
+
+
+        <!-- RED -->
+        <article class="color-card red-card">
+          <div class="block-image">
+            <img
+              src="index%20style%20images/red.png"
+              alt="Red Clics building block"
+            />
+          </div>
+
+          <div class="color-label">
+            <span class="shape-marker">■</span>
+            <span class="color-name">RED</span>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
 
 
     <!-- BUILDING MESSAGE -->
@@ -237,7 +257,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
-  <!-- Existing JavaScript -->
+  <!-- JavaScript -->
   <script src="script.js"></script>
 
 </body>
