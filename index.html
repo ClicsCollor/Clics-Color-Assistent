@@ -1,50 +1,244 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fundamentals Pipeline</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
-  <link rel="preload" href="font/HappyChicken.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#ffffff" />
+
+  <title>Clics Color Assistant</title>
+
+  <!-- Google Font: Fredoka -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet" />
+
+  <!-- CSS stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <header>
-    <h1>Clics Color Assistent</h1>
-    <p>AI-Powered Colour Recognition for Colour-Blind Children</p>
+  <!-- HEADER -->
+  <header class="site-header">
+
+    <a class="brand" href="#" aria-label="Clics Color Assistant home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span>Clics <span class="brand-light">Color Assistant</span></span>
+    </a>
+
+    <p class="header-tagline">
+      Build with confidence. Discover every color!
+    </p>
+
   </header>
 
+
   <main>
-    <!-- Camera / input feed -->
-    <section id="input-section">
-      <video id="webcam" autoplay playsinline></video>
-      <canvas id="output-canvas"></canvas>
+
+    <!-- INTRODUCTION -->
+    <section class="intro">
+
+      <p class="eyebrow">YOUR LITTLE BUILDING HELPER</p>
+
+      <h1>Every color has a place.</h1>
+
+      <p class="intro-copy">
+        Let’s find the color of your Clics block and get building!
+      </p>
+
     </section>
 
-    <!-- Prediction / result display -->
-    <section id="result-section">
-      <div id="label-container"></div>
+
+    <!-- CAMERA / SCANNER SECTION -->
+    <section class="scanner-card" aria-labelledby="scanner-title">
+
+      <div class="section-heading">
+
+        <span class="step-number">1</span>
+
+        <div>
+          <h2 id="scanner-title">Place your block</h2>
+          <p>Put one Clics block on the scanner stand.</p>
+        </div>
+
+      </div>
+
+
+      <!-- Camera preview -->
+      <!-- Keep these IDs connected to script.js -->
+      <section id="input-section" aria-label="Camera preview">
+
+        <video id="webcam" autoplay playsinline></video>
+
+        <canvas id="output-canvas"></canvas>
+
+        <div class="camera-hint" aria-hidden="true">
+          <span class="camera-hint-icon">⌖</span>
+          <span>Place your block inside the camera view</span>
+        </div>
+
+      </section>
+
+
+      <p class="helper-text">
+        Keep the block still while it is being scanned.
+      </p>
+
+
+      <!-- START BUTTON -->
+      
+<div class="scanner-controls">
+
+  <button id="start-btn" type="button">
+    <span class="button-icon">▶</span>
+    Start camera
+  </button>
+
+  <button id="identify-btn" type="button" disabled>
+    <span class="button-icon">✓</span>
+    Identify my block
+  </button>
+
+</div>
+
+<p id="scan-status" class="scan-status" aria-live="polite">
+  Start the camera to begin scanning.
+</p>
+
+
+
+      <!-- PREDICTION / RESULT SECTION -->
+      <div class="result-wrap">
+
+        <div class="section-heading result-heading">
+
+          <span class="step-number">2</span>
+
+          <div>
+            <h2>Color result</h2>
+            <p>Your Clics color will appear here.</p>
+          </div>
+
+        </div>
+
+
+        <section id="result-section" aria-live="polite">
+
+          <div id="label-container">
+            <p class="result-placeholder">
+              Your color is waiting to be discovered!
+            </p>
+          </div>
+
+        </section>
+
+      </div>
+
     </section>
 
-    <button id="start-btn">Start</button>
+
+    <!-- COLOR GUIDE -->
+<section class="color-guide" aria-labelledby="color-guide-title">
+
+  <div class="color-guide-heading">
+    <div>
+      <p class="eyebrow">MIX, MATCH & CREATE</p>
+      <h2 id="color-guide-title">Meet your Clics colors</h2>
+    </div>
+
+    <p class="color-guide-note">
+      Every color has its own shape and name.
+    </p>
+  </div>
+
+  <div class="color-grid">
+
+    <!-- BLUE -->
+    <article class="color-card blue-card">
+      <div class="block-image">
+        <img src="index%20style%20images/blue.png"
+             alt="Blue Clics building block" />
+      </div>
+      <div class="color-label">
+        <span class="shape-marker">◆</span>
+        <span class="color-name">BLUE</span>
+      </div>
+    </article>
+
+    <!-- GREEN -->
+    <article class="color-card green-card">
+      <div class="block-image">
+        <img src="index%20style%20images/green.png"
+             alt="Green Clics building block" />
+      </div>
+      <div class="color-label">
+        <span class="shape-marker">●</span>
+        <span class="color-name">GREEN</span>
+      </div>
+    </article>
+
+    <!-- YELLOW -->
+    <article class="color-card yellow-card">
+      <div class="block-image">
+        <img src="index%20style%20images/yellow.png"
+             alt="Yellow Clics building block" />
+      </div>
+      <div class="color-label">
+        <span class="shape-marker">▲</span>
+        <span class="color-name">YELLOW</span>
+      </div>
+    </article>
+
+    <!-- RED -->
+    <article class="color-card red-card">
+      <div class="block-image">
+        <img src="index%20style%20images/red.png"
+             alt="Red Clics building block" />
+      </div>
+      <div class="color-label">
+        <span class="shape-marker">■</span>
+        <span class="color-name">RED</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+    <!-- BUILDING MESSAGE -->
+    <section class="build-tip">
+
+      <span class="tip-icon" aria-hidden="true">✦</span>
+
+      <p>
+        <strong>Ready, set, build!</strong>
+        Scan your blocks, find the colors and bring your next big idea to life.
+      </p>
+
+    </section>
+
   </main>
 
+
+  <!-- FOOTER -->
   <footer>
-    <p>Built for the Technology-Driven Design module, University of Antwerp.</p>
+
+    <p>
+      Created for the Technology-Driven Design module · University of Antwerp
+    </p>
+
   </footer>
 
-  <!-- Teachable Machine library (remove if using Roboflow) -->
+
+  <!-- Teachable Machine libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
+  <!-- Existing JavaScript -->
   <script src="script.js"></script>
-</body>
 
+</body>
 </html>
