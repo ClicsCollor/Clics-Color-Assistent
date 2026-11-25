@@ -85,7 +85,7 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--accent-hover);
+  color: var(--accent);
   text-decoration: none;
   font-size: 1.15rem;
   font-weight: 600;
@@ -96,7 +96,7 @@ img {
   height: 38px;
   display: grid;
   place-items: center;
-  background: var(--accent-hover);
+  background: var(--accent);
   color: var(--button-text);
   border-radius: 11px;
   font-size: 1.2rem;
